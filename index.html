@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For Melanie</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Great+Vibes&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Dancing Script', cursive;
+            background: linear-gradient(135deg, #89AAD7, #FFC0CB);
+            color: #FF69B4; /* Changed to a soft, eye-appealing pink */
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            transition: background 1s ease;
+        }
+
+        .container {
+            text-align: center;
+            max-width: 800px;
+            padding: 20px;
+            width: 100%;
+        }
+
+        .page {
+            display: none;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        h1 {
+            font-size: 3em;
+            color: #000; /* Changed to black */
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+            animation: fadeIn 2s ease-in-out;
+        }
+
+        h2 {
+            font-size: 2.5em;
+            color: #EA6993; /* Matching deeper pink */
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+
+        button {
+            background: #FF1493;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.2em;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            margin: 10px;
+            font-family: 'Dancing Script', cursive; /* Apply cute font to buttons */
+        }
+
+        button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+        }
+
+        .photo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .photo-card {
+            perspective: 1000px;
+            width: 100%;
+            height: 200px; /* Adjust height as needed */
+            position: relative;
+            transition: transform 0.5s ease, opacity 0.5s ease;
+            opacity: 0;
+            transform: scale(0.8);
+            animation: photoAppear 1s ease-in-out forwards;
+        }
+
+        .photo-card:nth-child(1) { animation-delay: 0.5s; }
+        .photo-card:nth-child(2) { animation-delay: 1s; }
+        .photo-card:nth-child(3) { animation-delay: 1.5s; }
+        .photo-card:nth-child(4) { animation-delay: 2s; }
+        .photo-card:nth-child(5) { animation-delay: 2.5s; }
+        .photo-card:nth-child(6) { animation-delay: 3s; }
+
+        .photo-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.8s;
+            transform-style: preserve-3d;
+        }
+
+        .photo-card:hover .photo-inner {
+            transform: rotateY(180deg);
+        }
+
+        .photo-front, .photo-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+
+        .photo-front {
+            background: #fff;
+        }
+
+        .photo-front img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain; /* Changed to contain to prevent cropping */
+            border-radius: 15px;
+        }
+
+        .photo-back {
+            transform: rotateY(180deg);
+            background: linear-gradient(135deg, #89AAD7, #FFB6C1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px;
+            color: #C71585; /* Darker pink color */
+            font-size: 1.2em;
+            font-family: 'Great Vibes', cursive; /* Different cursive font for back text */
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5); /* Enhanced shadow */
+            -webkit-text-stroke: 1px #000; /* Black outline */
+        }
+
+        .center-photo {
+            max-width: 100%;
+            height: auto;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            margin: 20px 0;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes photoAppear {
+            from { opacity: 0; transform: scale(0.8) rotate(-5deg); }
+            to { opacity: 1; transform: scale(1) rotate(0deg); }
+        }
+
+        .text-space {
+            margin: 20px 0;
+            font-size: 1.5em;
+            color: #000; /* Changed to black */
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+
+        audio {
+            margin-top: 20px;
+            display: none;
+        }
+
+        .congrats {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: #FF1493;
+            animation: fall 3s linear infinite;
+        }
+
+        .confetti:nth-child(odd) {
+            background: #FFC0CB;
+        }
+
+        @keyframes fall {
+            to {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        video {
+            width: 100%;
+            height: 100vh;
+            object-fit: cover;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 10;
+        }
+
+        /* Mobile responsiveness */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2em;
+            }
+            h2 {
+                font-size: 1.8em;
+            }
+            button {
+                padding: 12px 25px;
+                font-size: 1em;
+            }
+            .photo-grid {
+                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            }
+            .photo-card {
+                height: 150px; /* Adjust for mobile */
+            }
+            .photo-back {
+                font-size: 0.8em;
+            }
+            .text-space {
+                font-size: 1.2em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Page 1: Initial -->
+        <div class="page active" id="page1">
+            <h1>This is for my Melanie</h1>
+            <button id="openBtn">Open</button>
+        </div>
+
+        <!-- Page 2: Photos -->
+        <div class="page" id="page2">
+            <div class="text-space">
+                <!-- Add your custom text here, e.g., a love note -->
+               Babe, look! These are our memmories we shared so far, from our first meet up to the second HEHE
+            </div>
+            <div class="photo-grid">
+                <!-- Replace with your actual photo paths and back texts -->
+                <div class="photo-card">
+                    <div class="photo-inner">
+                        <div class="photo-front">
+                            <img src="photo1.png" alt="Photo 1">
+                        </div>
+                        <div class="photo-back">
+                            Kissing your lips always feels like home
+                        </div>
+                    </div>
+                </div>
+                <div class="photo-card">
+                    <div class="photo-inner">
+                        <div class="photo-front">
+                            <img src="photo2.png" alt="Photo 2">
+                        </div>
+                        <div class="photo-back">
+                           Your kiss could take all my worries away
+                        </div>
+                    </div>
+                </div>
+                <div class="photo-card">
+                    <div class="photo-inner">
+                        <div class="photo-front">
+                            <img src="photo3.png" alt="Photo 3">
+                        </div>
+                        <div class="photo-back">
+                           You made my life a little extra happy just you being in it
+                        </div>
+                    </div>
+                </div>
+                <div class="photo-card">
+                    <div class="photo-inner">
+                        <div class="photo-front">
+                            <img src="photo4.png" alt="Photo 4">
+                        </div>
+                        <div class="photo-back">
+                            I never thought that i could feel home just by holding your hand
+                        </div>
+                    </div>
+                </div>
+                <div class="photo-card">
+                    <div class="photo-inner">
+                        <div class="photo-front">
+                            <img src="photo5.png" alt="Photo 5">
+                        </div>
+                        <div class="photo-back">
+                            I won't get tired of reminding how pretty you are even on the days where you feel like you are not.
+                        </div>
+                    </div>
+                </div>
+                <div class="photo-card">
+                    <div class="photo-inner">
+                        <div class="photo-front">
+                            <img src="photo6.png" alt="Photo 6">
+                        </div>
+                        <div class="photo-back">
+                         Before, I always felt like something in me was missing, that void that I feel in my heart. But then you came, you fill that void in me, like a missing puzzel piece that I've been looking for. You complete me, and I love you for that
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="text-space">
+               
+               Loving you feels like exhaling after holding my breath for too long.
+Before you, everything felt complicated, like I always had to prove something, be something more. But with you, I don’t have to try so hard. I don’t have to pretend. I can just be who I am.
+
+You make love feel gentle, not heavy. Safe, not scary.
+You make my doubts quieter and my heart braver. Somehow, without forcing it, you turn all the chaos into something simple and real.
+
+If love is supposed to feel like home, then you’re the place where my heart finally learned how to rest. And if loving you is the easiest thing I’ve ever done… it’s because you make it that way, just by being you.
+            </div>
+            <audio id="song" controls>
+                <!-- Replace with the actual path to "Easy" by Camila Cabello. Note: Ensure you have legal rights to use the song. -->
+                <source src="easy-by-camila-cabello.mp3" type="audio/mpeg">
+                Your browser does not support the audio element.
+            </audio>
+        </div>
+    </div>
+
+    <script>
+        // Function to show a page
+        function showPage(pageId) {
+            document.querySelectorAll('.page').forEach(page => page.classList.remove('active'));
+            document.getElementById(pageId).classList.add('active');
+        }
+
+        // Page 1 to Page 2
+        document.getElementById('openBtn').addEventListener('click', function() {
+            showPage('page2');
+            const song = document.getElementById('song');
+            song.style.display = 'block';
+            song.play();
+        });
+    </script>
+</body>
+</html>
